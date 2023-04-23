@@ -1,4 +1,1 @@
-Lab\ 4\ Input\ Files/asc50.dat
-Lab\ 4\ Input\ Files/dup50.dat
-Lab\ 4\ Input\ Files/rev50.dat
-Lab\ 4\ Input\ Files/ran50.dat
+Lab_4_Input_Files/asc50.dat
