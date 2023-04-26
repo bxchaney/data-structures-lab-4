@@ -27,27 +27,25 @@ def make_files(parent_folder: str) -> None:
         write_file(random_with_dupes(n), "dupe", parent_folder)
 
 
-def sorted_list(n) -> list[int]:
-    return [i+1 for i in range(n)]
+def sorted_list(n) -> list[str]:
+    return [str(i+1) for i in range(n)]
 
-def reverse_list(n) -> list[int]:
-    return [i for i in range(n,0,-1)]
+def reverse_list(n) -> list[str]:
+    return [str(i) for i in range(n,0,-1)]
 
-def random_list(n) -> list[int]:
-    l = [i +1 for i in range(n)]
+def random_list(n) -> list[str]:
+    l = [str(i +1) for i in range(n)]
     random.shuffle(l)
     return l
 
-def random_with_dupes(n: int) -> np.ndarray:
-    return [i + 1 for i in  np.random.choice(n,n, replace=True)]
+def random_with_dupes(n: int) -> list[str]:
+    return [str(i + 1) for i in  np.random.choice(n,n, replace=True)]
 
-def write_file(data: list[int], type: str, parent_folder: str) -> None:
+def write_file(data: list[str], type: str, parent_folder: str) -> None:
     filename = f"{type}{len(data)}.dat"
     with open(os.path.join(parent_folder, filename), "w") as f:
-        for i in data:
-            f.write(f"{i}\n")
+        f.write("\n".join(data))
 
 if __name__ == '__main__':
     main(sys.argv)
-    
     
