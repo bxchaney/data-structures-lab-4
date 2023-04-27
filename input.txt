@@ -1,1 +1,2 @@
-Lab_4_Input_Files/asc50.dat
+./data/asc50.dat
+./data/desc50.dat

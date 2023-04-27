@@ -16,7 +16,7 @@ target_compile_options(compiler_flags INTERFACE
 
 add_compile_options(-Wall -Werror -pedantic-errors -Wextra -Wunused)
 
-#add_subdirectory(encoding)
+# add_subdirectory(sorting)
 add_executable(Lab4 main.cpp)
 
-#target_link_libraries(Lab4 PUBLIC encoding)
+# target_link_libraries(Lab4 PUBLIC sorting)
