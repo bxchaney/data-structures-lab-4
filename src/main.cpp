@@ -25,10 +25,10 @@ int open_and_read(char* s)
         
     }
     std::cout << "Queue filled" << std::endl;
-    QuickSort qsort {q, 2};
+    QuickSort qsort {q, 3};
     qsort.sort();
     std::cout << qsort << std::endl;
-    // qsort.write_output(std::cout);
+   // qsort.write_output(std::cout);
     buff.close();
     return 0;
 
