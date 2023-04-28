@@ -1,2 +1,8 @@
 ./data/asc50.dat
 ./data/desc50.dat
+./data/rand50.dat
+./data/dupe50.dat
+./data/asc500.dat
+./data/desc500.dat
+./data/rand500.dat
+./data/dupe500.dat
