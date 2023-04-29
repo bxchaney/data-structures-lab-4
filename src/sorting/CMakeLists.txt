@@ -1,4 +1,4 @@
-add_library(sorting qsort.cpp)
+add_library(sorting qsort.cpp mergesort.cpp)
 add_subdirectory(utils)
 
 target_include_directories(sorting INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
