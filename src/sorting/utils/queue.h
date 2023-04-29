@@ -16,8 +16,6 @@ struct Node
         ~Node() = default;
 };
 
-
-
 template<typename T>
 class Queue
 {
