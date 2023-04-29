@@ -10,9 +10,9 @@
 ///  1: partition of 50 is stopping case, first element is pivot
 ///  2: partition of 100 is stopping case, first element is pivot
 ///  3: partition of 2 is stopping case, median of 3 is pivot
-/// @param queue a Queue of integer data
+/// @param queue a Queue of integer data, makes a copy on construction
 /// @param type 
-QuickSort::QuickSort(Queue<int>& queue, int type)
+QuickSort::QuickSort(Queue<int> queue, int type)
 {
     if (type < 0 || type > 3) type = 0;
     switch (type)

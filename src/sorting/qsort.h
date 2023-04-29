@@ -29,7 +29,7 @@ class QuickSort
         void insertion_sort(int, int);
 
     public:
-        QuickSort(Queue<int>&, int);
+        QuickSort(Queue<int>, int);
         ~QuickSort() = default;
 
         void sort();
