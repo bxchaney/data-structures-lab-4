@@ -35,21 +35,6 @@ NaturalMergeSort::NaturalMergeSort(Queue<int> q)
     }
 }
 
-// NaturalMergeSort::~NaturalMergeSort()
-// {
-//     std::cout << "destroying merge: " << _size << std::endl;
-//     _tail = nullptr;
-//     if (_head) _head->~MergeNode();
-
-//     // while(current)
-//     // {
-//     //     next = current->next;
-//     //     std::cout << "deleting " << current->data << std::endl;
-//     //     current->~MergeNode();
-//     //     current = next;
-//     // }
-// }
-
 void NaturalMergeSort::enqueue(int x)
 {
     node_pointer new_node = std::shared_ptr<MergeNode>(new MergeNode(x));

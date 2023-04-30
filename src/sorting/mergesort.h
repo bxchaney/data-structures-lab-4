@@ -43,8 +43,6 @@ class NaturalMergeSort
 
         Endpoints next_partition(node_pointer);
 
-        // void move_behind(node_pointer, node_pointer);
-
         Endpoints mergesort(node_pointer);
 
         Endpoints merge(Endpoints&, Endpoints&);
