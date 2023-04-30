@@ -16,8 +16,7 @@ def make_files(parent_folder: str) -> None:
         5000,
         10_000,
         20_000,
-        100_000,
-        1_000_000,
+        50_000
     ]
 
     for n in sizes:
