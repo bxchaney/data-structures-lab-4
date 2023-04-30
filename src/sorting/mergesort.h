@@ -36,8 +36,8 @@ class NaturalMergeSort
         node_pointer _tail {nullptr};
         int _size = 0;
 
-        int _comparisons = 0;
-        int _exchanges = 0;
+        unsigned long long _comparisons = 0;
+        unsigned long long _exchanges = 0;
 
         void enqueue(int);
 

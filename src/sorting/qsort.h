@@ -11,8 +11,8 @@ class QuickSort
         int _size;
         int _partition;
 
-        int _swaps {0};
-        int _comparisons {0};
+        unsigned long long _swaps {0};
+        unsigned long long _comparisons {0};
 
         bool _first_pivot {0};
 
