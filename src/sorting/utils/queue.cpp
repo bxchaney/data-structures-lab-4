@@ -19,14 +19,13 @@ Queue<T>::Queue(Queue<T>& other)
 template<typename T>
 Queue<T>::~Queue()
 {
-    node_pointer current = _head;
-    node_pointer next;
-    while(current)
+    while(_head)
     {
-        next = current->next;
-        current->~Node();
-        current = next;
+        node_pointer curr = _head;
+        _head = _head->next;
+        curr->~Node();
     }
+    _tail = nullptr;
 }
 
 template<typename T>
