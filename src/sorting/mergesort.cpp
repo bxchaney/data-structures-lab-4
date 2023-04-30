@@ -180,6 +180,15 @@ void NaturalMergeSort::write_output(std::ostream& os)
     }
 }
 
+void NaturalMergeSort::write_summary(std::ostream& os)
+{
+    os << "MergeSort" << ",";
+    os << -1 << ",";
+    os << -1 << ",";
+    os << _comparisons << ",";
+    os << _exchanges << std::endl;
+}
+
 std::ostream& operator<<(std::ostream& os, NaturalMergeSort& merge)
 {
     os << "Mergesort:" << std::endl;

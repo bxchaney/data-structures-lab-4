@@ -58,12 +58,14 @@ void write_qsort_output(std::string& input_file, QuickSort& qsort, int type)
     qsort_buff.close();
 }
 
-void run_sorting_algorithms(Queue<int>& q, char* s)
+void run_sorting_algorithms(Queue<int>& q, char* s, std::ostream& os)
 {
     std::string filename = fs::path(s).filename().string();
     NaturalMergeSort natl_merge {q};
     natl_merge.sort();
     std::cout << natl_merge << std::endl;
+    os << s << ",";
+    natl_merge.write_summary(os);
     write_merge_output(filename, natl_merge);
 
     for (int i = 0; i<= 3; i++)
@@ -71,11 +73,13 @@ void run_sorting_algorithms(Queue<int>& q, char* s)
         QuickSort qsort {q, i};
         qsort.sort();
         std::cout << qsort << std::endl;
+        os << s << ",";
+        qsort.write_summary(os);
         write_qsort_output(filename, qsort, i);
     }
 }
 
-int open_and_read(char* s)
+int open_and_read(char* s, std::ostream& os)
 {
     std::filebuf buff;
     if (!buff.open(s, std::ios::in))
@@ -94,8 +98,18 @@ int open_and_read(char* s)
         
     }
     buff.close();
-    run_sorting_algorithms(q, s);
+    run_sorting_algorithms(q, s, os);
     return 0;
+}
+
+void write_summary_headers(std::ostream& os)
+{
+    os << "Input File" << ",";
+    os << "Type" << ",";
+    os << "Partition Size" << ",";
+    os << "Pivot Type" << ",";
+    os << "Comparisons" << ",";
+    os << "Exchanges" << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -108,13 +122,16 @@ int main(int argc, char* argv[])
 
     
     char s [256];
-    
-    
+    std::filebuf summ_buff;
+    fs::path p = fs::current_path();
+    p /= "summary.csv";
+    summ_buff.open(p, std::ios::out);  
+    std::ostream os {&summ_buff};  
     while(!is.eof())
     {
         is.getline(s, 256);
         std::cout << "Input: " << s << std::endl;
-        if (open_and_read(s) == -1) 
+        if (open_and_read(s, os) == -1) 
         {
             input.close();
             return -1;

@@ -175,6 +175,15 @@ void QuickSort::write_output(std::ostream& os)
     }
 }
 
+void QuickSort::write_summary(std::ostream& os)
+{
+    os << "QuickSort" << ",";
+    os << _partition << ",";
+    os << _first_pivot << ",";
+    os << _comparisons << ",";
+    os << _swaps << std::endl;
+}
+
 std::ostream& operator<<(std::ostream& os, QuickSort& qs)
 {
     os << "Quicksort:" << std::endl;

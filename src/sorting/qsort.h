@@ -31,6 +31,7 @@ class QuickSort
         void sort();
 
         void write_output(std::ostream&);
+        void write_summary(std::ostream&);
 
         friend std::ostream& operator<<(std::ostream&, QuickSort&);
 };
