@@ -60,19 +60,19 @@ void write_qsort_output(std::string& input_file, QuickSort& qsort, int type)
 
 void run_sorting_algorithms(Queue<int>& q, char* s)
 {
-    std::string filename = std::filesystem::path(s).filename();
+    std::string filename = fs::path(s).filename().string();
     NaturalMergeSort natl_merge {q};
     natl_merge.sort();
     std::cout << natl_merge << std::endl;
     write_merge_output(filename, natl_merge);
 
-    // for (int i = 0; i<= 3; i++)
-    // {
-    //     QuickSort qsort {q, i};
-    //     qsort.sort();
-    //     std::cout << qsort << std::endl;
-    //     write_qsort_output(filename, qsort, i);
-    // }
+    for (int i = 0; i<= 3; i++)
+    {
+        QuickSort qsort {q, i};
+        qsort.sort();
+        std::cout << qsort << std::endl;
+        write_qsort_output(filename, qsort, i);
+    }
 }
 
 int open_and_read(char* s)
@@ -93,11 +93,9 @@ int open_and_read(char* s)
         q.enqueue(i);
         
     }
-    std::cout << "Queue filled" << std::endl;
-    run_sorting_algorithms(q, s);
     buff.close();
+    run_sorting_algorithms(q, s);
     return 0;
-
 }
 
 int main(int argc, char* argv[])
@@ -115,7 +113,7 @@ int main(int argc, char* argv[])
     while(!is.eof())
     {
         is.getline(s, 256);
-        std::cout << s << std::endl;
+        std::cout << "Input: " << s << std::endl;
         if (open_and_read(s) == -1) 
         {
             input.close();
