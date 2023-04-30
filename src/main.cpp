@@ -5,6 +5,75 @@
 #include<string>
 #include"sorting/utils/queue.h"
 #include"sorting/qsort.h"
+#include"sorting/mergesort.h"
+
+namespace fs = std::filesystem;
+
+void write_merge_output(std::string& input_file, NaturalMergeSort& natl_merge)
+{
+    std::filebuf merge_buff;
+    fs::path p = fs::current_path();
+    p /= "./out";
+    if (!fs::exists(p))
+    {
+        fs::create_directory(p);
+    }
+    std::string filename = "merge_sorted_" + input_file;
+    p /= filename;
+    merge_buff.open(p, std::ios::out);
+    std::ostream os {&merge_buff};
+    natl_merge.write_output(os);
+    merge_buff.close();
+}
+
+void write_qsort_output(std::string& input_file, QuickSort& qsort, int type)
+{
+    std::filebuf qsort_buff;
+    fs::path p = fs::current_path();
+    p /= "./out";
+    if (!fs::exists(p))
+    {
+        fs::create_directory(p);
+    }
+    std::string detail;
+    switch (type)
+    {
+        case 1:
+            detail = "partition50_";
+            break;
+        case 2:
+            detail = "partition100_";
+            break;
+        case 3:
+            detail = "partition2_median_pivot_";
+            break;
+        default:
+            detail = "partition2_first_pivot_";
+    }
+    std::string filename = detail + input_file;
+    p /= filename;
+    qsort_buff.open(p, std::ios::out);
+    std::ostream os {&qsort_buff};
+    qsort.write_output(os);
+    qsort_buff.close();
+}
+
+void run_sorting_algorithms(Queue<int>& q, char* s)
+{
+    std::string filename = std::filesystem::path(s).filename();
+    NaturalMergeSort natl_merge {q};
+    natl_merge.sort();
+    std::cout << natl_merge << std::endl;
+    write_merge_output(filename, natl_merge);
+
+    // for (int i = 0; i<= 3; i++)
+    // {
+    //     QuickSort qsort {q, i};
+    //     qsort.sort();
+    //     std::cout << qsort << std::endl;
+    //     write_qsort_output(filename, qsort, i);
+    // }
+}
 
 int open_and_read(char* s)
 {
@@ -25,24 +94,14 @@ int open_and_read(char* s)
         
     }
     std::cout << "Queue filled" << std::endl;
-    QuickSort qsort {q, 3};
-    qsort.sort();
-    std::cout << qsort << std::endl;
-   // qsort.write_output(std::cout);
+    run_sorting_algorithms(q, s);
     buff.close();
     return 0;
 
 }
 
-
 int main(int argc, char* argv[])
 {
-    // std::cout << argc << std::endl;
-    // std::cout << argv[1] << std::endl;
-
-    // std::cout << f.inside_box() << std::endl;
-
-
     if(argc < 2) {std::cout << "huh" << std::endl; return -1;}
     std::filebuf input;
     if (!input.open(argv[1], std::ios::in)) { return -1;}
@@ -63,6 +122,7 @@ int main(int argc, char* argv[])
             return -1;
         }
     }
-    
+
+
 }
 

@@ -3,18 +3,6 @@
 #include<memory>
 #include"queue.h"
 
-struct Endpoints
-{
-    std::shared_ptr<MergeNode> left, right;
-    int size;
-    Endpoints() : left(nullptr), right(nullptr), size(0){};
-    Endpoints(
-        MergeSort::node_pointer left,
-        MergeSort::node_pointer right,
-        int segment_size
-    ) : left(left), right(right), size(segment_size) {};
-};
-
 class MergeNode
 {
     public:
@@ -24,13 +12,24 @@ class MergeNode
     ~MergeNode() = default;
 };
 
-class MergeSort
+class NaturalMergeSort
 {
     public: 
         typedef std::shared_ptr<MergeNode> node_pointer;
     private:
 
-        
+        class Endpoints
+        {
+            public:
+            std::shared_ptr<MergeNode> left, right;
+            int size;
+            Endpoints() = default;
+            Endpoints(
+                std::shared_ptr<MergeNode> left,
+                std::shared_ptr<MergeNode> right,
+                int segment_size
+            );
+        };
 
         // sentinel node
         node_pointer _head {nullptr};
@@ -54,12 +53,12 @@ class MergeSort
 
         
 
-        MergeSort(Queue<int>);
-        ~MergeSort();
+        NaturalMergeSort(Queue<int>);
+        ~NaturalMergeSort() = default;
 
         void sort();
 
         void write_output(std::ostream&);
 
-        friend std::ostream& operator<<(std::ostream&, MergeSort&);
+        friend std::ostream& operator<<(std::ostream&, NaturalMergeSort&);
 };
