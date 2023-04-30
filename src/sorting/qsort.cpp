@@ -27,6 +27,7 @@ QuickSort::QuickSort(Queue<int> queue, int type)
             break;
         case 3:
             _partition = 2;
+            _first_pivot = false;
             break;
         default:
             _partition = 2;
@@ -46,20 +47,29 @@ QuickSort::QuickSort(Queue<int> queue, int type)
 
 void QuickSort::qsort(int low, int high)
 {
-    _comparisons++;
-    if (low < high)
+    Stack<Tuple> stack {};
+    Tuple t {low, high};
+    stack.push(t);
+    while (!stack.is_empty())
     {
         _comparisons++;
-        if (high - low + 1 <= _partition)
+        t = stack.pop();
+        if (t.a < t.b)
         {
-            insertion_sort(low, high);
-        }
-        else
-        {
-            Tuple pivot = partition(low, high);
+            _comparisons++;
+            if ((t.b - t.a + 1) <= _partition)
+            {
+                insertion_sort(t.a, t.b);
+            }
+            else
+            {
+                Tuple pivot = partition(t.a, t.b);
 
-            qsort(low, pivot.a);
-            qsort(pivot.b, high);
+                Tuple low_partition {t.a, pivot.a};
+                Tuple high_partition {pivot.b, t.b};
+                stack.push(low_partition);
+                stack.push(high_partition);
+            }
         }
     }
 }
@@ -80,29 +90,26 @@ Tuple QuickSort::partition(int low, int high)
     int pivot = _data[pivot_loc];
     int left = low;
     int right = high;
-    _comparisons++;
     while (left <= right)
     {
-        _comparisons += 3;
+        _comparisons += 1;
         while((left <= right) && (_data[left] < pivot))
         {
             left++;
-            _comparisons += 3;
+            _comparisons++;
         }
-        _comparisons += 3;
+        _comparisons++;
         while((left <= right) && (_data[right] > pivot))
         {
             right--;
-            _comparisons += 3;
+            _comparisons++;
         }
-        _comparisons++;
         if (left <= right)
         {
             swap(left, right);
             left++;
             right--;
         }
-        _comparisons++;
     }
     Tuple t {right, left};
     return t;
@@ -118,18 +125,18 @@ void QuickSort::swap(int i, int j)
 
 int QuickSort::median(int a, int b, int c)
 {
-    if (b >= a && b >= c)
+    if (_data[b] >= _data[a] && _data[b] >= _data[c])
     {
         _comparisons += 2;
-        return (a >= c) ? a : c;
+        return (_data[a] >= _data[c]) ? a : c;
     }
-    if (a >= b && a >= c)
+    if (_data[a] >= _data[b] && _data[a] >= _data[c])
     {
         _comparisons += 3;
-        return (b >= c) ? b : c;
+        return (_data[b] >= _data[c]) ? b : c;
     }
     _comparisons += 3;
-    return (a >= b) ? a : b;
+    return (_data[a] >= _data[b]) ? a : b;
 }
 
 void QuickSort::insertion_sort(int low, int high)

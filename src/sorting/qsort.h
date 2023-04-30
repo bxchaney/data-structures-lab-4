@@ -2,11 +2,7 @@
 #include<iostream>
 #include<memory>
 #include"queue.h"
-
-struct Tuple
-{
-    int a, b;
-};
+#include"stack.h"
 
 class QuickSort
 {
