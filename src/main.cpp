@@ -9,6 +9,10 @@
 
 namespace fs = std::filesystem;
 
+/// @brief writes the mergesort output to a file and writes summary information
+/// to the console.
+/// @param input_file the name of the input file.
+/// @param natl_merge natural merge object containing sorted data.
 void write_merge_output(std::string& input_file, NaturalMergeSort& natl_merge)
 {
     std::filebuf merge_buff;
@@ -20,12 +24,21 @@ void write_merge_output(std::string& input_file, NaturalMergeSort& natl_merge)
     }
     std::string filename = "merge_sorted_" + input_file;
     p /= filename;
-    merge_buff.open(p, std::ios::out);
+    if(!merge_buff.open(p, std::ios::out))
+    {
+        std::cout << "Error opening file: " << filename << std::endl;
+        return;
+    }
     std::ostream os {&merge_buff};
     natl_merge.write_output(os);
     merge_buff.close();
 }
 
+/// @brief writes the quicksort output to a file and writes summary information
+/// to the console.
+/// @param input_file 
+/// @param qsort 
+/// @param type 
 void write_qsort_output(std::string& input_file, QuickSort& qsort, int type)
 {
     std::filebuf qsort_buff;
@@ -52,20 +65,24 @@ void write_qsort_output(std::string& input_file, QuickSort& qsort, int type)
     }
     std::string filename = detail + input_file;
     p /= filename;
-    qsort_buff.open(p, std::ios::out);
+    if(!qsort_buff.open(p, std::ios::out))
+    {
+        std::cout << "Error opening file: " << filename << std::endl;
+        return;
+    }
     std::ostream os {&qsort_buff};
     qsort.write_output(os);
     qsort_buff.close();
 }
 
-void run_sorting_algorithms(Queue<int>& q, char* s, std::ostream& os)
+void run_sorting_algorithms(Queue<int>& q, char* s, std::ostream& summary_os)
 {
     std::string filename = fs::path(s).filename().string();
     NaturalMergeSort natl_merge {q};
     natl_merge.sort();
     std::cout << natl_merge << std::endl;
-    os << s << ",";
-    natl_merge.write_summary(os);
+    summary_os << s << ",";
+    natl_merge.write_summary(summary_os);
     write_merge_output(filename, natl_merge);
 
     for (int i = 0; i<= 3; i++)
@@ -73,12 +90,17 @@ void run_sorting_algorithms(Queue<int>& q, char* s, std::ostream& os)
         QuickSort qsort {q, i};
         qsort.sort();
         std::cout << qsort << std::endl;
-        os << s << ",";
-        qsort.write_summary(os);
+        summary_os << s << ",";
+        qsort.write_summary(summary_os);
         write_qsort_output(filename, qsort, i);
     }
 }
 
+/// @brief opens and reads one of the filepaths in the input file. Triggers
+/// all sorting algorithms.
+/// @param s 
+/// @param os 
+/// @return 
 int open_and_read(char* s, std::ostream& os)
 {
     std::filebuf buff;
@@ -102,6 +124,8 @@ int open_and_read(char* s, std::ostream& os)
     return 0;
 }
 
+/// @brief Writes the headers for the summary csv.
+/// @param os 
 void write_summary_headers(std::ostream& os)
 {
     os << "Input File" << ",";
@@ -114,6 +138,8 @@ void write_summary_headers(std::ostream& os)
 
 int main(int argc, char* argv[])
 {
+    // Assumes the first argument is the input file.
+    // Does not consider any other outputs.
     if(argc < 2) {std::cout << "huh" << std::endl; return -1;}
     std::filebuf input;
     if (!input.open(argv[1], std::ios::in)) { return -1;}
@@ -127,6 +153,7 @@ int main(int argc, char* argv[])
     p /= "summary.csv";
     summ_buff.open(p, std::ios::out);  
     std::ostream os {&summ_buff};  
+    write_summary_headers(os);
     while(!is.eof())
     {
         is.getline(s, 256);
@@ -137,7 +164,6 @@ int main(int argc, char* argv[])
             return -1;
         }
     }
-
-
+    summ_buff.close();
 }
 
