@@ -45,6 +45,9 @@ QuickSort::QuickSort(Queue<int> queue, int type)
     }
 }
 
+/// @brief Iteritively sorts the data using quicksort.
+/// @param low the lower bound of the data to be sorted.
+/// @param high the upper bound of the data to be sorted.
 void QuickSort::qsort(int low, int high)
 {
     Stack<Tuple> stack {};
@@ -54,15 +57,21 @@ void QuickSort::qsort(int low, int high)
     {
         _comparisons++;
         t = stack.pop();
+
+        // if the lower bound is less than the upper bound, go to next
+        // iteration.
         if (t.a < t.b)
         {
             _comparisons++;
+            // if the partition is less than _partition, use insertion sort
+            // do not push onto stack
             if ((t.b - t.a + 1) <= _partition)
             {
                 insertion_sort(t.a, t.b);
             }
             else
             {
+                // partition the data and push the partitions onto the stack
                 Tuple pivot = partition(t.a, t.b);
 
                 Tuple low_partition {t.a, pivot.a};
@@ -74,8 +83,15 @@ void QuickSort::qsort(int low, int high)
     }
 }
 
+/// @brief partitions the data according to the pivot.
+/// This implementation is sourced from Datastructures and Algorithms in C++
+/// by Goodrich, Tamassia, and Mount. 2nd ed. 2011.
+/// @param low the lower bound of the data to be sorted.
+/// @param high the upper bound of the data to be sorted.
+/// @return 
 Tuple QuickSort::partition(int low, int high)
 {
+    // the array index of the pivot.
     int pivot_loc;
     _comparisons++;
     if (_first_pivot)
@@ -92,13 +108,17 @@ Tuple QuickSort::partition(int low, int high)
     int right = high;
     while (left <= right)
     {
-        _comparisons += 1;
+        _comparisons++;
+        // left moves right until we find a value less than or equal to
+        // the pivot.
         while((left <= right) && (_data[left] < pivot))
         {
             left++;
             _comparisons++;
         }
         _comparisons++;
+        // right moves left until we find a value greater than or equal to
+        // the pivot.
         while((left <= right) && (_data[right] > pivot))
         {
             right--;
@@ -115,6 +135,9 @@ Tuple QuickSort::partition(int low, int high)
     return t;
 }
 
+/// @brief Swaps the values at the given indices.
+/// @param i 
+/// @param j 
 void QuickSort::swap(int i, int j)
 {
     _swaps += 2;
@@ -123,6 +146,11 @@ void QuickSort::swap(int i, int j)
     _data[j] = t;
 }
 
+/// @brief Returns the median of the three values at the given indices.
+/// @param a 
+/// @param b 
+/// @param c 
+/// @return 
 int QuickSort::median(int a, int b, int c)
 {
     if (_data[b] >= _data[a] && _data[b] >= _data[c])
@@ -139,6 +167,10 @@ int QuickSort::median(int a, int b, int c)
     return (_data[a] >= _data[b]) ? a : b;
 }
 
+/// @brief Performs insertion sort on the data. This implementation is sourced
+/// from: https://www.geeksforgeeks.org/insertion-sort/
+/// @param low 
+/// @param high 
 void QuickSort::insertion_sort(int low, int high)
 {
     int i, key, j;
@@ -161,11 +193,14 @@ void QuickSort::insertion_sort(int low, int high)
     }
 }
 
+/// @brief sorts the data.
 void QuickSort::sort()
 {
     qsort(0, _size - 1);
 }
 
+/// @brief writes the output to the given stream.
+/// @param os 
 void QuickSort::write_output(std::ostream& os)
 {
     int i = 0;
@@ -175,6 +210,8 @@ void QuickSort::write_output(std::ostream& os)
     }
 }
 
+/// @brief Writes summary information to the given stream.
+/// @param os 
 void QuickSort::write_summary(std::ostream& os)
 {
     os << "QuickSort" << ",";

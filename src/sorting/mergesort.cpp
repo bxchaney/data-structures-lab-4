@@ -1,13 +1,6 @@
 /**
- * @file mergesort.cpp
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2023-04-29
- * 
- * @copyright Copyright (c) 2023
- * 
- * Source of imlpementation: https://leetcode.com/problems/sort-list/solutions/997518/java-natural-merge-sort-of-linked-list-o1-space/
+ * Source of imlpementation:
+ * https://leetcode.com/problems/sort-list/solutions/997518/java-natural-merge-sort-of-linked-list-o1-space/
  * 
  */
 
@@ -35,6 +28,8 @@ NaturalMergeSort::NaturalMergeSort(Queue<int> q)
     }
 }
 
+/// @brief Adds a new element to the end of the list
+/// @param x 
 void NaturalMergeSort::enqueue(int x)
 {
     node_pointer new_node = std::shared_ptr<MergeNode>(new MergeNode(x));
@@ -53,6 +48,7 @@ void NaturalMergeSort::enqueue(int x)
 }
 
 
+/// @brief sorts the data.
 void NaturalMergeSort::sort()
 {
     Endpoints ep = mergesort(_head);
@@ -61,6 +57,10 @@ void NaturalMergeSort::sort()
 
 }
 
+/// @brief Performs natural merge sort on teh linked list. This implementation
+/// comes from the link at the top of the file.
+/// @param node 
+/// @return 
 NaturalMergeSort::Endpoints NaturalMergeSort::mergesort(node_pointer node)
 {
     if(!node || !node->next )
@@ -93,6 +93,10 @@ NaturalMergeSort::Endpoints NaturalMergeSort::mergesort(node_pointer node)
     return merged;
 }
 
+/// @brief merges two segments of the linked list.
+/// @param seg1 
+/// @param seg2 
+/// @return 
 NaturalMergeSort::Endpoints NaturalMergeSort::merge(Endpoints& seg1, Endpoints& seg2)
 {
     if(!seg2.left) return seg1;
@@ -139,6 +143,9 @@ NaturalMergeSort::Endpoints NaturalMergeSort::merge(Endpoints& seg1, Endpoints& 
     return ep;
 }
 
+/// @brief returns the next partition of the linked list of sorted elements.
+/// @param left 
+/// @return 
 NaturalMergeSort::Endpoints NaturalMergeSort::next_partition(
     std::shared_ptr<MergeNode> left
 )
@@ -170,6 +177,8 @@ NaturalMergeSort::Endpoints NaturalMergeSort::next_partition(
     return ep;
 }
 
+/// @brief writes the output to the output stream.
+/// @param os 
 void NaturalMergeSort::write_output(std::ostream& os)
 {
     node_pointer curr = _head;
@@ -180,6 +189,8 @@ void NaturalMergeSort::write_output(std::ostream& os)
     }
 }
 
+/// @brief writes summary information to the output stream.
+/// @param os 
 void NaturalMergeSort::write_summary(std::ostream& os)
 {
     os << "MergeSort" << ",";

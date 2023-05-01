@@ -1,6 +1,10 @@
 #include<memory>
 #include"queue.h"
 
+/// @brief The copy constructor for Queue<T>. Creates new instance of Queue<T>
+/// with copies of the same elements in the same order.
+/// @tparam T 
+/// @param other 
 template<typename T>
 Queue<T>::Queue(Queue<T>& other)
 {
@@ -16,9 +20,12 @@ Queue<T>::Queue(Queue<T>& other)
     }
 }
 
+/// @brief Queue<T> destructor.
+/// @tparam T 
 template<typename T>
 Queue<T>::~Queue()
 {
+    // Iteritively delete each node in Queue.
     while(_head)
     {
         node_pointer curr = _head;
@@ -28,6 +35,10 @@ Queue<T>::~Queue()
     _tail = nullptr;
 }
 
+/// @brief Assignment operator for Queue<T>.
+/// @tparam T 
+/// @param other 
+/// @return 
 template<typename T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& other)
 {
@@ -44,11 +55,12 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& other)
     return *this;
 }
 
+/// @brief Adds new element to the end of the queue.
+/// @tparam T type of elements in the queue.
+/// @param data value being added to the queue.
 template <typename T>
 void Queue<T>::enqueue(value_type data)
 {
-    
-    
     node_pointer new_node = std::shared_ptr<node_type>(new Node(data));
         
     // Queue is empty
@@ -67,6 +79,9 @@ void Queue<T>::enqueue(value_type data)
     _size++;
 }
 
+/// @brief Returns and removes the front element of the queue.
+/// @tparam T value type of elements in the queue.
+/// @return front element of the queue.
 template<typename T>
 typename Queue<T>::value_type Queue<T>::dequeue()
 {
@@ -87,12 +102,21 @@ typename Queue<T>::value_type Queue<T>::dequeue()
     return node->data;
 }
 
+/// @brief Returns the number of elements in the queue.
+/// @tparam T the type of elements in the queue.
+/// @return 
 template <typename T>
 size_t Queue<T>::size()
 {
     return _size;
 }
 
+/// @brief ostream operator overloaded to support printing of Queue<T>
+/// objects.
+/// @tparam T type of elements in the queue. 
+/// @param os an ostream.
+/// @param q a Queue<T>.
+/// @return os.
 template<typename T>
 std::ostream& operator<< (std::ostream& os, Queue<T>& q)
 {
