@@ -10,7 +10,7 @@
 namespace fs = std::filesystem;
 
 /// @brief writes the mergesort output to a file and writes summary information
-/// to the console.
+/// to the console. Ouput files are written to the ./out directory.
 /// @param input_file the name of the input file.
 /// @param natl_merge natural merge object containing sorted data.
 void write_merge_output(std::string& input_file, NaturalMergeSort& natl_merge)
@@ -35,7 +35,7 @@ void write_merge_output(std::string& input_file, NaturalMergeSort& natl_merge)
 }
 
 /// @brief writes the quicksort output to a file and writes summary information
-/// to the console.
+/// to the console. Ouput files are written to the ./out directory.
 /// @param input_file 
 /// @param qsort 
 /// @param type 
