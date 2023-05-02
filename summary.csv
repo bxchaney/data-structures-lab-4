@@ -1,3 +1,4 @@
+Input File,Type,Partition Size,Pivot Type,Comparisons,Exchanges
 ./data/asc50.dat,MergeSort,-1,-1,49,0
 ./data/asc50.dat,QuickSort,2,1,1517,97
 ./data/asc50.dat,QuickSort,50,1,101,49
