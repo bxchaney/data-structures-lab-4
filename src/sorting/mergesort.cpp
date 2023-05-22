@@ -5,13 +5,12 @@
  */
 
 #include<iostream>
-#include<memory>
 #include"queue.h"
 #include"mergesort.h"
 
 NaturalMergeSort::Endpoints::Endpoints(
-        std::shared_ptr<MergeNode> left,
-        std::shared_ptr<MergeNode> right,
+        NaturalMergeSort::node_pointer left,
+        NaturalMergeSort::node_pointer right,
         int segment_size
 )
 {
@@ -28,11 +27,23 @@ NaturalMergeSort::NaturalMergeSort(Queue<int> q)
     }
 }
 
+NaturalMergeSort::~NaturalMergeSort()
+{
+    node_pointer curr_node;
+    while (_head)
+    {
+        curr_node = _head->next;
+        _head->~MergeNode();
+        _head = curr_node;
+    }
+}
+
+
 /// @brief Adds a new element to the end of the list
 /// @param x 
 void NaturalMergeSort::enqueue(int x)
 {
-    node_pointer new_node = std::shared_ptr<MergeNode>(new MergeNode(x));
+    node_pointer new_node = new MergeNode(x);
     // linked list is empty
     if (!_head)
     {
@@ -100,7 +111,7 @@ NaturalMergeSort::Endpoints NaturalMergeSort::mergesort(node_pointer node)
 NaturalMergeSort::Endpoints NaturalMergeSort::merge(Endpoints& seg1, Endpoints& seg2)
 {
     if(!seg2.left) return seg1;
-    node_pointer dummy = std::shared_ptr<MergeNode>(new MergeNode(0));
+    node_pointer dummy = new MergeNode(0);
     node_pointer node1  = seg1.left;
     node_pointer node2 = seg2.left;
     node_pointer node = dummy;
@@ -139,7 +150,9 @@ NaturalMergeSort::Endpoints NaturalMergeSort::merge(Endpoints& seg1, Endpoints& 
         _exchanges++;
     }
     tail->next = nullptr;
-    Endpoints ep (dummy->next,tail, seg1.size + seg2.size);
+    node_pointer segment_head = dummy->next;
+    dummy->~MergeNode();
+    Endpoints ep (segment_head,tail, seg1.size + seg2.size);
     return ep;
 }
 
@@ -147,7 +160,7 @@ NaturalMergeSort::Endpoints NaturalMergeSort::merge(Endpoints& seg1, Endpoints& 
 /// @param left 
 /// @return 
 NaturalMergeSort::Endpoints NaturalMergeSort::next_partition(
-    std::shared_ptr<MergeNode> left
+    node_pointer left
 )
 {
     node_pointer curr = left;

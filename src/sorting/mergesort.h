@@ -1,13 +1,12 @@
 #pragma once
 #include<iostream>
-#include<memory>
 #include"queue.h"
 
 class MergeNode
 {
     public:
     int data;
-    std::shared_ptr<MergeNode> next;
+    MergeNode *next;
     MergeNode(int data) : data(data), next(nullptr) {}
     ~MergeNode() = default;
 };
@@ -15,18 +14,19 @@ class MergeNode
 class NaturalMergeSort
 {
     public: 
-        typedef std::shared_ptr<MergeNode> node_pointer;
+        using node_pointer = MergeNode*;        
     private:
 
         class Endpoints
         {
             public:
-            std::shared_ptr<MergeNode> left, right;
+            node_pointer left;
+            node_pointer right;
             int size;
             Endpoints() = default;
             Endpoints(
-                std::shared_ptr<MergeNode> left,
-                std::shared_ptr<MergeNode> right,
+                node_pointer left,
+                node_pointer right,
                 int segment_size
             );
         };
@@ -52,7 +52,7 @@ class NaturalMergeSort
         
 
         NaturalMergeSort(Queue<int>);
-        ~NaturalMergeSort() = default;
+        ~NaturalMergeSort();
 
         void sort();
 
